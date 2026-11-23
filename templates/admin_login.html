@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1266e8">
+    <title>Admin Login | MediCare Hospital</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 25px;
+            font-family: "DM Sans", Arial, sans-serif;
+            background:
+                radial-gradient(circle at 15% 15%, rgba(77,165,255,.23), transparent 30%),
+                radial-gradient(circle at 90% 85%, rgba(19,184,166,.16), transparent 28%),
+                linear-gradient(135deg, #eaf3ff, #f7fbff 55%, #e9f4ff);
+            overflow-x: hidden;
+        }
+
+        .background-circle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .circle-one {
+            width: 240px;
+            height: 240px;
+            top: -90px;
+            right: -65px;
+            background: rgba(18,102,232,.10);
+        }
+
+        .circle-two {
+            width: 170px;
+            height: 170px;
+            bottom: -55px;
+            left: -50px;
+            background: rgba(19,184,166,.12);
+            animation-delay: -3s;
+        }
+
+        .circle-three {
+            width: 75px;
+            height: 75px;
+            top: 18%;
+            left: 12%;
+            background: rgba(18,102,232,.08);
+            animation-delay: -5s;
+        }
+
+        .login-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 445px;
+            animation: card-entry .8s cubic-bezier(.2,.7,.2,1) both;
+        }
+
+        .login-box {
+            padding: 39px;
+            background: rgba(255,255,255,.94);
+            border: 1px solid rgba(255,255,255,.95);
+            border-radius: 24px;
+            box-shadow: 0 25px 75px rgba(28,76,135,.14);
+            backdrop-filter: blur(16px);
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .brand-icon {
+            width: 67px;
+            height: 67px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 16px;
+            color: #fff;
+            font-size: 37px;
+            border-radius: 21px;
+            background: linear-gradient(145deg, #2792ff, #0755c8);
+            box-shadow: 0 12px 25px rgba(18,102,232,.25);
+            animation: icon-pop .7s .2s both;
+        }
+
+        .brand h1 {
+            color: #102b50;
+            font: 800 25px "Manrope", sans-serif;
+            letter-spacing: -.8px;
+        }
+
+        .brand h1 span {
+            color: #1266e8;
+        }
+
+        .brand p {
+            margin-top: 8px;
+            color: #718198;
+            font-size: 13px;
+        }
+
+        .divider {
+            height: 1px;
+            margin: 27px 0;
+            background: linear-gradient(to right, transparent, #dce7f4, transparent);
+        }
+
+        .login-heading {
+            margin-bottom: 23px;
+        }
+
+        .login-heading h2 {
+            color: #102b50;
+            font: 800 21px "Manrope", sans-serif;
+        }
+
+        .login-heading p {
+            margin-top: 6px;
+            color: #718198;
+            font-size: 13px;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 9px;
+            color: #314760;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            top: 50%;
+            left: 14px;
+            transform: translateY(-50%);
+            color: #8294aa;
+            font-size: 17px;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            height: 51px;
+            padding: 0 45px 0 43px;
+            color: #102b50;
+            background: #f8faff;
+            border: 1px solid #e2eaf5;
+            border-radius: 11px;
+            outline: none;
+            font: 500 14px "DM Sans", sans-serif;
+            transition: border-color .25s, box-shadow .25s, background .25s;
+        }
+
+        input::placeholder {
+            color: #a4b1c1;
+        }
+
+        input:focus {
+            background: #fff;
+            border-color: #1266e8;
+            box-shadow: 0 0 0 4px rgba(18,102,232,.10);
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 13px;
+            transform: translateY(-50%);
+            border: 0;
+            padding: 5px;
+            color: #718198;
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .password-toggle:hover {
+            color: #1266e8;
+        }
+
+        .login-btn {
+            width: 100%;
+            min-height: 52px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 26px;
+            border: 0;
+            border-radius: 11px;
+            color: #fff;
+            background: linear-gradient(120deg, #197cf1, #0755c8);
+            box-shadow: 0 9px 20px rgba(18,102,232,.21);
+            font: 700 15px "DM Sans", sans-serif;
+            cursor: pointer;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 13px 25px rgba(18,102,232,.30);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn span {
+            transition: transform .2s;
+        }
+
+        .login-btn:hover span {
+            transform: translateX(4px);
+        }
+
+        .messages {
+            display: grid;
+            gap: 9px;
+            margin-top: 17px;
+        }
+
+        .error {
+            padding: 12px 14px;
+            color: #b42332;
+            background: #fff0f1;
+            border: 1px solid #ffd5d9;
+            border-radius: 10px;
+            font-size: 13px;
+            line-height: 1.5;
+            animation: card-entry .35s both;
+        }
+
+        .back {
+            display: block;
+            margin-top: 24px;
+            color: #1266e8;
+            text-align: center;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .back:hover {
+            color: #084db8;
+        }
+
+        .security-note {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            margin-top: 20px;
+            color: #8998aa;
+            font-size: 11px;
+        }
+
+        .security-note span {
+            color: #0d9b83;
+        }
+
+        .copyright {
+            margin-top: 22px;
+            color: #93a1b3;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        @keyframes card-entry {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes icon-pop {
+            0% {
+                opacity: 0;
+                transform: scale(.7) rotate(-10deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-18px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 17px;
+            }
+
+            .login-box {
+                padding: 29px 23px;
+                border-radius: 19px;
+            }
+
+            .brand h1 {
+                font-size: 23px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-circle circle-one"></div>
+    <div class="background-circle circle-two"></div>
+    <div class="background-circle circle-three"></div>
+
+    <main class="login-wrapper">
+
+        <section class="login-box">
+
+            <div class="brand">
+                <div class="brand-icon">✚</div>
+                <h1>Medi<span>Care</span> Hospital</h1>
+                <p>Smart Healthcare Management System</p>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="login-heading">
+                <h2>Welcome Back! 👋</h2>
+                <p>Sign in to access your administration dashboard.</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('admin_login') }}">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+
+                    <div class="input-wrap">
+                        <span class="input-icon">♙</span>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter admin username"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+
+                    <div class="input-wrap">
+                        <span class="input-icon">♙</span>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter admin password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                            aria-label="Show password"
+                        >
+                            Show
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Login to Dashboard <span>→</span>
+                </button>
+
+            </form>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="error" role="alert">
+                                ⚠ {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <a href="/" class="back">← Back to Home</a>
+
+            <div class="security-note">
+                <span>🔒</span>
+                Secure Admin Access
+            </div>
+
+        </section>
+
+        <p class="copyright">
+            © <span id="year"></span> MediCare Hospital. All rights reserved.
+        </p>
+
+    </main>
+
+    <script>
+        // Show / Hide Password
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        togglePassword.addEventListener("click", function () {
+            const isHidden = passwordInput.type === "password";
+
+            passwordInput.type = isHidden ? "text" : "password";
+            togglePassword.textContent = isHidden ? "Hide" : "Show";
+
+            togglePassword.setAttribute(
+                "aria-label",
+                isHidden ? "Hide password" : "Show password"
+            );
+        });
+
+        // Current Year
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+    </script>
+
+</body>
+</html>

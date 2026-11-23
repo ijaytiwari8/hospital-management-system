@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Prescriptions | MediCare</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #17243b;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8edf5;
+        }
+
+        .logo {
+            color: #0f766e;
+            font-family: 'Manrope', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .back {
+            padding: 11px 17px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .tag {
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 9px;
+        }
+
+        h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #8290a5;
+            font-size: 14px;
+        }
+
+        .prescription-card {
+            background: white;
+            border: 1px solid #e8edf5;
+            border-radius: 17px;
+            padding: 27px;
+            margin-bottom: 24px;
+            box-shadow: 0 8px 25px rgba(30,55,90,0.05);
+        }
+
+        .prescription-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 18px;
+            border-bottom: 2px solid #e8edf5;
+            margin-bottom: 20px;
+        }
+
+        .hospital-name {
+            color: #0f766e;
+            font-family: 'Manrope', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .prescription-number {
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .record-date {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: #17304d;
+            margin-bottom: 15px;
+        }
+
+        .doctor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 13px;
+            margin-bottom: 25px;
+        }
+
+        .detail {
+            background: #f8faff;
+            border: 1px solid #edf1f7;
+            padding: 14px;
+            border-radius: 10px;
+        }
+
+        .detail small {
+            display: block;
+            color: #8290a5;
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .detail strong {
+            font-size: 13px;
+            color: #263650;
+            overflow-wrap: anywhere;
+        }
+
+        .diagnosis {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 17px;
+            border-radius: 9px;
+            margin-bottom: 23px;
+        }
+
+        .diagnosis h3 {
+            font-size: 12px;
+            color: #2563eb;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .diagnosis p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #263650;
+        }
+
+        .medicine-table-wrap {
+            overflow-x: auto;
+            margin-bottom: 22px;
+        }
+
+        .medicine-table {
+            width: 100%;
+            min-width: 650px;
+            border-collapse: collapse;
+        }
+
+        .medicine-table th,
+        .medicine-table td {
+            padding: 13px 12px;
+            border-bottom: 1px solid #edf1f7;
+            text-align: left;
+            font-size: 12px;
+        }
+
+        .medicine-table th {
+            background: #f1f5f9;
+            color: #475569;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: .4px;
+        }
+
+        .medicine-table td {
+            color: #263650;
+            line-height: 1.6;
+        }
+
+        .medicine-name {
+            font-weight: 800;
+            color: #1d4ed8 !important;
+        }
+
+        .medicine-note {
+            background: #f8faff;
+            padding: 11px;
+            border-radius: 8px;
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .instructions {
+            background: #ecfdf5;
+            border-left: 4px solid #0f766e;
+            padding: 17px;
+            border-radius: 9px;
+            margin-bottom: 20px;
+        }
+
+        .instructions h3 {
+            color: #0f766e;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .instructions p {
+            font-size: 13px;
+            color: #334155;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 22px;
+        }
+
+        .print-btn {
+            border: none;
+            background: linear-gradient(120deg, #2563eb, #4f46e5);
+            color: white;
+            padding: 12px 19px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .print-btn:hover {
+            opacity: .9;
+        }
+
+        .empty {
+            background: white;
+            text-align: center;
+            padding: 65px 20px;
+            border-radius: 17px;
+            border: 1px solid #e8edf5;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            font-family: 'Manrope', sans-serif;
+            margin-bottom: 8px;
+            color: #263650;
+        }
+
+        .empty p {
+            color: #8290a5;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #9aa6b8;
+            font-size: 12px;
+        }
+
+        @media(max-width: 600px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .container {
+                padding: 0 13px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .prescription-card {
+                padding: 18px;
+            }
+
+            .doctor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                justify-content: stretch;
+            }
+
+            .print-btn {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .navbar,
+            .heading,
+            .actions,
+            .footer {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .prescription-card {
+                border: none;
+                box-shadow: none;
+                border-radius: 0;
+                padding: 10px;
+                margin: 0;
+                page-break-inside: avoid;
+            }
+
+            .medicine-table-wrap {
+                overflow: visible;
+            }
+
+            .medicine-table {
+                min-width: 0;
+            }
+
+            .medicine-table th,
+            .medicine-table td {
+                font-size: 10px;
+                padding: 8px;
+            }
+
+            .detail,
+            .diagnosis,
+            .instructions {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">Medi<span>Care</span> 🏥</div>
+
+        <a href="{{ url_for('patient_dashboard') }}" class="back">
+            ← Dashboard
+        </a>
+    </header>
+
+    <main class="container">
+
+        <section class="heading">
+            <div class="tag">PATIENT PORTAL</div>
+            <h1>My Prescriptions 💊</h1>
+            <p class="subtitle">
+                View your digital prescriptions and prescribed medicines.
+            </p>
+        </section>
+
+        {% if prescriptions %}
+
+            {% for prescription in prescriptions %}
+
+            <article class="prescription-card">
+
+                <div class="prescription-header">
+                    <div>
+                        <div class="hospital-name">MediCare Hospital</div>
+                        <div class="record-date">
+                            Created: {{ prescription.created_at }}
+                        </div>
+                    </div>
+
+                    <span class="prescription-number">
+                        Prescription #{{ prescription.prescription_id }}
+                    </span>
+                </div>
+
+                <h2 class="section-title">Doctor Information</h2>
+
+                <div class="doctor-grid">
+
+                    <div class="detail">
+                        <small>Doctor Name</small>
+                        <strong>{{ prescription.doctor_name }}</strong>
+                    </div>
+
+                    <div class="detail">
+                        <small>Specialization</small>
+                        <strong>{{ prescription.specialization }}</strong>
+                    </div>
+
+                    <div class="detail">
+                        <small>Patient ID</small>
+                        <strong>#{{ prescription.patient_id }}</strong>
+                    </div>
+
+                    <div class="detail">
+                        <small>Appointment Date</small>
+                        <strong>
+                            {{ prescription.appointment_date or 'Not available' }}
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="diagnosis">
+                    <h3>Diagnosis</h3>
+                    <p>{{ prescription.diagnosis }}</p>
+                </div>
+
+                <h2 class="section-title">💊 Prescribed Medicines</h2>
+
+                {% if prescription.medicines %}
+
+                <div class="medicine-table-wrap">
+
+                    <table class="medicine-table">
+
+                        <thead>
+                            <tr>
+                                <th>Medicine</th>
+                                <th>Dosage</th>
+                                <th>Frequency</th>
+                                <th>Duration</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for medicine in prescription.medicines %}
+
+                            <tr>
+                                <td class="medicine-name">
+                                    {{ medicine.medicine_name }}
+
+                                    {% if medicine.medicine_instructions %}
+                                    <div class="medicine-note">
+                                        {{ medicine.medicine_instructions }}
+                                    </div>
+                                    {% endif %}
+                                </td>
+
+                                <td>{{ medicine.dosage or '-' }}</td>
+                                <td>{{ medicine.frequency or '-' }}</td>
+                                <td>{{ medicine.duration or '-' }}</td>
+                                <td>{{ medicine.quantity or '-' }}</td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                    <p>No medicine details available.</p>
+
+                {% endif %}
+
+                {% if prescription.instructions %}
+
+                <div class="instructions">
+                    <h3>General Instructions</h3>
+                    <p>{{ prescription.instructions }}</p>
+                </div>
+
+                {% endif %}
+
+                <div class="actions">
+                    <button type="button"
+                            class="print-btn"
+                            onclick="window.print()">
+                        🖨 Print / Save as PDF
+                    </button>
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                <div class="empty-icon">💊</div>
+                <h2>No Prescriptions Found</h2>
+                <p>
+                    Your digital prescriptions will appear here
+                    after your doctor creates them.
+                </p>
+            </div>
+
+        {% endif %}
+
+        <footer class="footer">
+            © 2026 MediCare Hospital Management System. All Rights Reserved.
+        </footer>
+
+    </main>
+
+</body>
+</html>

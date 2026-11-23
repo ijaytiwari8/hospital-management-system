@@ -1,0 +1,564 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Prescription | MediCare</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #17243b;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8edf5;
+        }
+
+        .logo {
+            color: #0f766e;
+            font-family: 'Manrope', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .back {
+            padding: 11px 17px;
+            background: #eff6ff;
+            color: #2563eb;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .page-heading {
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 9px;
+        }
+
+        h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #8290a5;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #e8edf5;
+            border-radius: 16px;
+            padding: 26px;
+            margin-bottom: 22px;
+            box-shadow: 0 8px 25px rgba(30,55,90,0.05);
+        }
+
+        .card-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 21px;
+            color: #17304d;
+        }
+
+        .patient-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .patient-detail {
+            background: #f8faff;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #edf1f7;
+        }
+
+        .patient-detail small {
+            display: block;
+            color: #8290a5;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .patient-detail strong {
+            font-size: 14px;
+            color: #263650;
+            overflow-wrap: anywhere;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #40516a;
+            margin-bottom: 8px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #dfe6f0;
+            border-radius: 9px;
+            outline: none;
+            background: #fbfcff;
+            color: #263650;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+            background: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 95px;
+        }
+
+        .medicine-card {
+            background: #f8faff;
+            border: 1px solid #e5eaf3;
+            border-radius: 12px;
+            padding: 19px;
+            margin-bottom: 15px;
+        }
+
+        .medicine-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 17px;
+        }
+
+        .medicine-heading h3 {
+            font-size: 15px;
+            color: #1e40af;
+        }
+
+        .medicine-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .medicine-grid .form-group {
+            margin-bottom: 5px;
+        }
+
+        .medicine-instructions {
+            margin-top: 15px;
+        }
+
+        .remove-btn {
+            border: none;
+            background: #fff1f2;
+            color: #dc2626;
+            border-radius: 7px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .add-btn {
+            border: 1px solid #bfdbfe;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 11px 16px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        .add-btn:hover {
+            background: #dbeafe;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(120deg, #2563eb, #4f46e5);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .25s;
+            margin-top: 5px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37,99,235,.2);
+        }
+
+        .note {
+            color: #8290a5;
+            font-size: 12px;
+            margin-top: 12px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            text-align: center;
+            color: #9aa6b8;
+            font-size: 12px;
+            padding: 25px;
+        }
+
+        @media(max-width: 600px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .container {
+                padding: 0 13px;
+            }
+
+            .card {
+                padding: 19px;
+            }
+
+            .patient-grid,
+            .medicine-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">Medi<span>Care</span> 🏥</div>
+
+        <a href="{{ url_for('doctor_appointments') }}" class="back">
+            ← My Appointments
+        </a>
+    </header>
+
+    <main class="container">
+
+        <div class="page-heading">
+            <div class="tag">DOCTOR PORTAL</div>
+            <h1>Create Digital Prescription 🩺</h1>
+            <p class="subtitle">
+                Add diagnosis, medicines and treatment instructions.
+            </p>
+        </div>
+
+        <!-- Patient Information -->
+
+        <section class="card">
+
+            <h2 class="card-title">👤 Patient Information</h2>
+
+            <div class="patient-grid">
+
+                <div class="patient-detail">
+                    <small>Patient Name</small>
+                    <strong>{{ appointment.patient_name }}</strong>
+                </div>
+
+                <div class="patient-detail">
+                    <small>Patient ID</small>
+                    <strong>#{{ appointment.patient_id }}</strong>
+                </div>
+
+                <div class="patient-detail">
+                    <small>Age</small>
+                    <strong>{{ appointment.age or 'Not provided' }}</strong>
+                </div>
+
+                <div class="patient-detail">
+                    <small>Gender</small>
+                    <strong>{{ appointment.gender or 'Not provided' }}</strong>
+                </div>
+
+                <div class="patient-detail">
+                    <small>Phone</small>
+                    <strong>{{ appointment.phone }}</strong>
+                </div>
+
+                <div class="patient-detail">
+                    <small>Doctor</small>
+                    <strong>{{ appointment.doctor_name }}</strong>
+                </div>
+
+                <div class="patient-detail">
+                    <small>Specialization</small>
+                    <strong>{{ appointment.specialization }}</strong>
+                </div>
+
+                <div class="patient-detail">
+                    <small>Appointment ID</small>
+                    <strong>#{{ appointment.appointment_id }}</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+        <form method="POST"
+              action="{{ url_for('add_prescription', appointment_id=appointment.appointment_id) }}">
+
+            <!-- Diagnosis -->
+
+            <section class="card">
+
+                <h2 class="card-title">📝 Diagnosis Details</h2>
+
+                <div class="form-group">
+                    <label for="diagnosis">Diagnosis *</label>
+                    <textarea
+                        id="diagnosis"
+                        name="diagnosis"
+                        placeholder="Enter patient diagnosis..."
+                        required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="instructions">General Instructions</label>
+                    <textarea
+                        id="instructions"
+                        name="instructions"
+                        placeholder="Enter general instructions for the patient..."></textarea>
+                </div>
+
+            </section>
+
+            <!-- Medicines -->
+
+            <section class="card">
+
+                <h2 class="card-title">💊 Prescribed Medicines</h2>
+
+                <div id="medicine-container">
+
+                    <div class="medicine-card">
+
+                        <div class="medicine-heading">
+                            <h3>Medicine 1</h3>
+                        </div>
+
+                        <div class="medicine-grid">
+
+                            <div class="form-group">
+                                <label>Medicine Name *</label>
+                                <input type="text"
+                                       name="medicine_name[]"
+                                       placeholder="Medicine name"
+                                       required>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Dosage</label>
+                                <input type="text"
+                                       name="dosage[]"
+                                       placeholder="e.g. 500 mg">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Frequency</label>
+                                <input type="text"
+                                       name="frequency[]"
+                                       placeholder="e.g. Twice a day">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Duration</label>
+                                <input type="text"
+                                       name="duration[]"
+                                       placeholder="e.g. 5 days">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="text"
+                                       name="quantity[]"
+                                       placeholder="e.g. 10 tablets">
+                            </div>
+
+                        </div>
+
+                        <div class="form-group medicine-instructions">
+                            <label>Medicine Instructions</label>
+                            <textarea
+                                name="medicine_instructions[]"
+                                placeholder="Enter specific instructions..."></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <button type="button"
+                        class="add-btn"
+                        id="add-medicine">
+                    + Add Another Medicine
+                </button>
+
+                <p class="note">
+                    Add all prescribed medicines separately. Confirm medicine,
+                    dosage and frequency before saving the prescription.
+                </p>
+
+            </section>
+
+            <button type="submit" class="submit-btn">
+                ✓ Save Digital Prescription
+            </button>
+
+        </form>
+
+        <footer class="footer">
+            © 2026 MediCare Hospital Management System. All Rights Reserved.
+        </footer>
+
+    </main>
+
+    <script>
+        const container = document.getElementById("medicine-container");
+        const addButton = document.getElementById("add-medicine");
+
+        let medicineCount = 1;
+
+        addButton.addEventListener("click", function () {
+
+            medicineCount++;
+
+            const medicineCard = document.createElement("div");
+
+            medicineCard.className = "medicine-card";
+
+            medicineCard.innerHTML = `
+                <div class="medicine-heading">
+                    <h3>Medicine ${medicineCount}</h3>
+
+                    <button type="button" class="remove-btn">
+                        Remove
+                    </button>
+                </div>
+
+                <div class="medicine-grid">
+
+                    <div class="form-group">
+                        <label>Medicine Name *</label>
+                        <input type="text"
+                               name="medicine_name[]"
+                               placeholder="Medicine name"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Dosage</label>
+                        <input type="text"
+                               name="dosage[]"
+                               placeholder="e.g. 500 mg">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Frequency</label>
+                        <input type="text"
+                               name="frequency[]"
+                               placeholder="e.g. Twice a day">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <input type="text"
+                               name="duration[]"
+                               placeholder="e.g. 5 days">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="text"
+                               name="quantity[]"
+                               placeholder="e.g. 10 tablets">
+                    </div>
+
+                </div>
+
+                <div class="form-group medicine-instructions">
+                    <label>Medicine Instructions</label>
+                    <textarea
+                        name="medicine_instructions[]"
+                        placeholder="Enter specific instructions..."></textarea>
+                </div>
+            `;
+
+            container.appendChild(medicineCard);
+
+        });
+
+        container.addEventListener("click", function (event) {
+
+            if (event.target.classList.contains("remove-btn")) {
+
+                event.target.closest(".medicine-card").remove();
+
+                medicineCount = container.querySelectorAll(".medicine-card").length;
+
+            }
+
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Medical History | MediCare</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #173b67;
+            margin-bottom: 10px;
+        }
+
+        .patient {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 8px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 90px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 13px;
+            border: none;
+            border-radius: 7px;
+            background: #1769aa;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #12558b;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            color: #1769aa;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Add Medical History</h2>
+
+        <p class="patient">
+            Patient: {{ appointment.patient_name }}
+            | Appointment ID: {{ appointment.appointment_id }}
+        </p>
+
+        <form method="POST">
+
+            <label>Diagnosis *</label>
+            <input type="text" name="diagnosis"
+                   placeholder="Enter diagnosis" required>
+
+            <label>Symptoms</label>
+            <textarea name="symptoms"
+                      placeholder="Describe patient symptoms"></textarea>
+
+            <label>Treatment</label>
+            <textarea name="treatment"
+                      placeholder="Enter treatment details"></textarea>
+
+            <label>Additional Notes</label>
+            <textarea name="notes"
+                      placeholder="Enter additional notes"></textarea>
+
+            <button type="submit">Save Medical History</button>
+
+        </form>
+
+        <a href="{{ url_for('doctor_appointments') }}" class="back">
+            Back to Appointments
+        </a>
+
+    </div>
+
+</body>
+</html>

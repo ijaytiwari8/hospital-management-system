@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Generate Bill | MediCare</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #17243b;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8edf5;
+        }
+
+        .logo {
+            font-family: 'Manrope', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: #0f766e;
+        }
+
+        .logo span {
+            color: #2563eb;
+        }
+
+        .back {
+            text-decoration: none;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 11px 17px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 38px auto;
+            padding: 0 20px;
+        }
+
+        .heading {
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            color: #2563eb;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 9px;
+        }
+
+        h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 30px;
+            margin-bottom: 7px;
+        }
+
+        .subtitle {
+            color: #8290a5;
+            font-size: 14px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border: 1px solid #e8edf5;
+            border-radius: 17px;
+            box-shadow: 0 8px 25px rgba(30,55,90,0.05);
+            margin-bottom: 22px;
+        }
+
+        .card-title {
+            font-family: 'Manrope', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: #17304d;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            color: #40516a;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #dfe6f0;
+            border-radius: 9px;
+            background: #fbfcff;
+            color: #263650;
+            font-size: 13px;
+            outline: none;
+            transition: .2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #2563eb;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(37,99,235,.08);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .appointment-option {
+            line-height: 1.6;
+        }
+
+        .charges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .total-box {
+            background: linear-gradient(120deg, #eff6ff, #eef2ff);
+            padding: 23px;
+            border-radius: 13px;
+            border: 1px solid #dbeafe;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .total-box h3 {
+            color: #40516a;
+            font-size: 14px;
+        }
+
+        .total-amount {
+            font-family: 'Manrope', sans-serif;
+            color: #1d4ed8;
+            font-weight: 800;
+            font-size: 29px;
+        }
+
+        .status-note {
+            margin-top: 14px;
+            color: #8290a5;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(120deg, #2563eb, #4f46e5);
+            color: white;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37,99,235,.2);
+        }
+
+        .flash {
+            padding: 13px 16px;
+            border-radius: 9px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            font-size: 13px;
+            margin-bottom: 18px;
+        }
+
+        .empty {
+            background: white;
+            padding: 55px 20px;
+            border: 1px solid #e8edf5;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 43px;
+            margin-bottom: 13px;
+        }
+
+        .empty h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #8290a5;
+            font-size: 13px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #9aa6b8;
+            font-size: 12px;
+            padding: 25px;
+        }
+
+        @media(max-width: 600px) {
+            .navbar {
+                padding: 15px 5%;
+            }
+
+            .container {
+                padding: 0 13px;
+                margin: 25px auto;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .card {
+                padding: 19px;
+            }
+
+            .charges-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .total-amount {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">Medi<span>Care</span> 🏥</div>
+
+        <a href="{{ url_for('dashboard') }}" class="back">
+            ← Dashboard
+        </a>
+    </header>
+
+    <main class="container">
+
+        <section class="heading">
+            <div class="tag">ADMIN PANEL</div>
+
+            <h1>Generate Patient Bill 🧾</h1>
+
+            <p class="subtitle">
+                Select a completed appointment and enter billing details.
+            </p>
+        </section>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="flash">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        {% if appointments %}
+
+        <form method="POST" action="{{ url_for('generate_bill') }}">
+
+            <!-- Appointment Selection -->
+
+            <section class="card">
+
+                <h2 class="card-title">👤 Patient & Appointment</h2>
+
+                <div class="form-group">
+
+                    <label for="appointment_id">
+                        Select Completed Appointment *
+                    </label>
+
+                    <select name="appointment_id"
+                            id="appointment_id"
+                            class="appointment-option"
+                            required>
+
+                        <option value="">-- Select Appointment --</option>
+
+                        {% for appointment in appointments %}
+
+                        <option value="{{ appointment.appointment_id }}">
+                            Appointment #{{ appointment.appointment_id }}
+                            - {{ appointment.patient_name }}
+                            (Patient ID: {{ appointment.patient_id }})
+                            - {{ appointment.appointment_date }}
+                            {{ appointment.appointment_time }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+            </section>
+
+            <!-- Charges -->
+
+            <section class="card">
+
+                <h2 class="card-title">💰 Billing Details</h2>
+
+                <div class="charges-grid">
+
+                    <div class="form-group">
+                        <label for="consultation_fee">
+                            Consultation Fee (₹) *
+                        </label>
+
+                        <input type="number"
+                               id="consultation_fee"
+                               name="consultation_fee"
+                               min="0"
+                               step="0.01"
+                               value="0.00"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medicine_charges">
+                            Medicine Charges (₹) *
+                        </label>
+
+                        <input type="number"
+                               id="medicine_charges"
+                               name="medicine_charges"
+                               min="0"
+                               step="0.01"
+                               value="0.00"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="other_charges">
+                            Other Charges (₹) *
+                        </label>
+
+                        <input type="number"
+                               id="other_charges"
+                               name="other_charges"
+                               min="0"
+                               step="0.01"
+                               value="0.00"
+                               required>
+                    </div>
+
+                </div>
+
+                <div class="total-box">
+
+                    <h3>Total Bill Amount</h3>
+
+                    <div class="total-amount" id="totalAmount">
+                        ₹0.00
+                    </div>
+
+                </div>
+
+                <p class="status-note">
+                    Payment status will initially be set to Pending.
+                    The total amount will also be calculated and validated
+                    by the server when the bill is submitted.
+                </p>
+
+            </section>
+
+            <!-- Additional Notes -->
+
+            <section class="card">
+
+                <h2 class="card-title">📝 Additional Notes</h2>
+
+                <div class="form-group">
+
+                    <label for="notes">
+                        Billing Notes (Optional)
+                    </label>
+
+                    <textarea name="notes"
+                              id="notes"
+                              placeholder="Enter any additional billing information..."></textarea>
+
+                </div>
+
+            </section>
+
+            <button type="submit" class="submit-btn">
+                ✓ Generate Bill
+            </button>
+
+        </form>
+
+        {% else %}
+
+        <div class="empty">
+
+            <div class="empty-icon">🧾</div>
+
+            <h2>No Appointments Available</h2>
+
+            <p>
+                Completed appointments without an existing bill
+                will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+        <footer class="footer">
+            © 2026 MediCare Hospital Management System. All Rights Reserved.
+        </footer>
+
+    </main>
+
+    <script>
+        const chargeInputs = [
+            document.getElementById("consultation_fee"),
+            document.getElementById("medicine_charges"),
+            document.getElementById("other_charges")
+        ];
+
+        const totalAmount = document.getElementById("totalAmount");
+
+        function calculateTotal() {
+
+            let total = 0;
+
+            chargeInputs.forEach(input => {
+
+                const value = Number(input.value);
+
+                if (Number.isFinite(value) && value >= 0) {
+                    total += value;
+                }
+
+            });
+
+            totalAmount.textContent = "₹" + total.toFixed(2);
+        }
+
+        chargeInputs.forEach(input => {
+            input.addEventListener("input", calculateTotal);
+        });
+
+        calculateTotal();
+    </script>
+
+</body>
+</html>

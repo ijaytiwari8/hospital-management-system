@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Medical History | MediCare</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        body {
+            background: #f4f7fc;
+            color: #17243b;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e8edf5;
+        }
+
+        .brand {
+            font-family: 'Manrope', sans-serif;
+            font-size: 25px;
+            font-weight: 800;
+            color: #0f766e;
+        }
+
+        .brand span {
+            color: #2563eb;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 11px 18px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .heading {
+            margin-bottom: 28px;
+        }
+
+        .tag {
+            color: #2563eb;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #8290a5;
+            font-size: 15px;
+        }
+
+        .history-card {
+            background: white;
+            padding: 25px;
+            border-radius: 17px;
+            border: 1px solid #e9eef6;
+            box-shadow: 0 8px 25px rgba(30,55,90,0.05);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-bottom: 17px;
+            border-bottom: 1px solid #edf1f7;
+            margin-bottom: 18px;
+        }
+
+        .card-header h2 {
+            color: #17304d;
+            font-family: 'Manrope', sans-serif;
+            font-size: 19px;
+        }
+
+        .date {
+            color: #2563eb;
+            background: #eff6ff;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .info {
+            margin-bottom: 18px;
+        }
+
+        .info h3 {
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 7px;
+        }
+
+        .info p {
+            color: #263650;
+            font-size: 14px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .doctor-info {
+            background: #f8faff;
+            padding: 14px;
+            border-radius: 10px;
+            color: #475569;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .empty {
+            background: white;
+            text-align: center;
+            padding: 65px 20px;
+            border-radius: 17px;
+            border: 1px solid #e9eef6;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            color: #263650;
+            margin-bottom: 8px;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .empty p {
+            color: #8290a5;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #9aa6b8;
+            font-size: 13px;
+            margin-top: 35px;
+        }
+
+        @media(max-width: 600px) {
+            .topbar {
+                padding: 15px 5%;
+            }
+
+            .container {
+                padding: 28px 15px;
+            }
+
+            h1 {
+                font-size: 25px;
+            }
+
+            .history-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="topbar">
+        <div class="brand">Medi<span>Care</span> 🏥</div>
+
+        <a href="{{ url_for('patient_dashboard') }}" class="back">
+            ← Dashboard
+        </a>
+    </header>
+
+    <main class="container">
+
+        <section class="heading">
+            <div class="tag">PATIENT PORTAL</div>
+            <h1>My Medical History 📋</h1>
+            <p class="subtitle">
+                View your previous diagnoses, symptoms and treatments.
+            </p>
+        </section>
+
+        {% if history %}
+
+            {% for record in history %}
+
+            <article class="history-card">
+
+                <div class="card-header">
+                    <h2>Medical Record #{{ record.history_id }}</h2>
+
+                    <span class="date">
+                        {{ record.created_at }}
+                    </span>
+                </div>
+
+                <div class="info">
+                    <h3>Diagnosis</h3>
+                    <p>{{ record.diagnosis }}</p>
+                </div>
+
+                <div class="info">
+                    <h3>Symptoms</h3>
+                    <p>{{ record.symptoms or 'Not provided' }}</p>
+                </div>
+
+                <div class="info">
+                    <h3>Treatment</h3>
+                    <p>{{ record.treatment or 'Not provided' }}</p>
+                </div>
+
+                <div class="info">
+                    <h3>Additional Notes</h3>
+                    <p>{{ record.notes or 'No additional notes' }}</p>
+                </div>
+
+                <div class="doctor-info">
+                    <strong>Doctor:</strong> {{ record.doctor_name }}
+                    <br>
+                    <strong>Specialization:</strong> {{ record.specialization }}
+                </div>
+
+            </article>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="empty">
+                <div class="empty-icon">📋</div>
+                <h2>No Medical History Found</h2>
+                <p>Your medical records will appear here after your doctor adds them.</p>
+            </div>
+
+        {% endif %}
+
+        <footer class="footer">
+            © 2026 MediCare Hospital Management System. All rights reserved.
+        </footer>
+
+    </main>
+
+</body>
+</html>

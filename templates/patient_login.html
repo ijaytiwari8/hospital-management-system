@@ -1,0 +1,480 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Login | MediCare</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #4f46e5;
+            --dark: #1e3a8a;
+            --text: #334155;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 15px;
+            background: linear-gradient(135deg, #e0f2fe, #eef2ff, #f5f3ff);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .background-circle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .circle-one {
+            width: 280px;
+            height: 280px;
+            background: rgba(96,165,250,0.14);
+            top: -100px;
+            left: -80px;
+        }
+
+        .circle-two {
+            width: 330px;
+            height: 330px;
+            background: rgba(129,140,248,0.12);
+            bottom: -140px;
+            right: -90px;
+            animation-delay: 2s;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 445px;
+            background: white;
+            padding: 39px;
+            border-radius: 23px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 20px 60px rgba(30,64,175,0.13);
+            animation: cardEnter 0.7s ease both;
+        }
+
+        .logo {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 17px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+            border-radius: 22px;
+            font-size: 38px;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        .tag {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 10px;
+            padding: 6px 12px;
+            background: #eff6ff;
+            color: var(--primary);
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--dark);
+            font-family: 'Manrope', sans-serif;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin: 10px 0 28px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .message {
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            font-size: 13px;
+            font-weight: 600;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #334155;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        .label-icon {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            background: #eff6ff;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            height: 51px;
+            padding: 0 15px;
+            border: 1px solid #dbe3ef;
+            border-radius: 11px;
+            outline: none;
+            background: #fbfdff;
+            color: #334155;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        input::placeholder {
+            color: #a0aec0;
+        }
+
+        input:focus {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.09);
+        }
+
+        input:hover {
+            border-color: #93c5fd;
+        }
+
+        .password-input {
+            padding-right: 75px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: var(--primary);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+            padding: 7px;
+        }
+
+        .toggle-password:hover {
+            color: var(--dark);
+        }
+
+        .login-btn {
+            width: 100%;
+            min-height: 53px;
+            margin-top: 7px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(120deg, #2563eb, #4f46e5);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(37,99,235,0.18);
+        }
+
+        .login-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37,99,235,0.28);
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .register {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .register a {
+            color: var(--primary);
+            font-weight: 800;
+            text-decoration: none;
+            margin-left: 4px;
+        }
+
+        .register a:hover {
+            text-decoration: underline;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 22px 0;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #e9eef5;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.25s;
+        }
+
+        .back:hover {
+            color: var(--primary);
+            transform: translateX(-3px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width: 500px) {
+            .login-container {
+                padding: 29px 21px;
+                border-radius: 19px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-circle circle-one"></div>
+    <div class="background-circle circle-two"></div>
+
+    <main class="login-container">
+
+        <div class="logo">🏥</div>
+
+        <span class="tag">PATIENT PORTAL</span>
+
+        <h1>Patient Login</h1>
+
+        <p class="subtitle">
+            Welcome back! Login to your MediCare account
+            to manage your health appointments.
+        </p>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('patient_login') }}" id="loginForm">
+
+            <div class="form-group">
+                <label for="phone">
+                    <span class="label-icon">📱</span>
+                    Mobile Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter registered mobile number"
+                    autocomplete="tel"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    <span class="label-icon">🔒</span>
+                    Password
+                </label>
+
+                <div class="input-wrapper">
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="password-input"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                        aria-label="Show password"
+                    >
+                        SHOW
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                Login to Account →
+            </button>
+
+        </form>
+
+        <div class="register">
+            Don't have an account?
+            <a href="{{ url_for('patients') }}">Register Now</a>
+        </div>
+
+        <div class="divider">SECURE PATIENT ACCESS</div>
+
+        <a href="{{ url_for('home') }}" class="back">
+            ← Back to Home
+        </a>
+
+        <div class="footer">
+            © 2026 MediCare Hospital Management System
+        </div>
+
+    </main>
+
+    <script>
+        // Show and hide password
+
+        const passwordInput = document.getElementById("password");
+        const togglePassword = document.getElementById("togglePassword");
+
+        togglePassword.addEventListener("click", function() {
+
+            const isPassword = passwordInput.type === "password";
+
+            passwordInput.type = isPassword ? "text" : "password";
+
+            togglePassword.textContent = isPassword ? "HIDE" : "SHOW";
+
+            togglePassword.setAttribute(
+                "aria-label",
+                isPassword ? "Hide password" : "Show password"
+            );
+        });
+
+        // Login button feedback
+
+        const loginForm = document.getElementById("loginForm");
+        const loginBtn = document.getElementById("loginBtn");
+
+        loginForm.addEventListener("submit", function() {
+            loginBtn.textContent = "Signing In...";
+            loginBtn.style.opacity = "0.8";
+            loginBtn.style.pointerEvents = "none";
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Doctor Registration | MediCare Hospital</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1769d2;
+            --primary-dark: #1054ad;
+            --navy: #102c50;
+            --bg: #f4f7fc;
+            --text: #1c2b40;
+            --muted: #7b8798;
+            --border: #e5ebf3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at 10% 10%, #e0edff, transparent 30%),
+                radial-gradient(circle at 90% 90%, #e7f3ff, transparent 30%),
+                var(--bg);
+            padding: 25px 20px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* HEADER */
+
+        .header {
+            max-width: 1100px;
+            margin: 0 auto 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: slideDown .6s ease both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-family: 'Manrope', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #1769d2, #4596e8);
+            color: white;
+            border-radius: 13px;
+            font-size: 22px;
+            box-shadow: 0 6px 15px rgba(23,105,210,.2);
+        }
+
+        .home-link {
+            color: #526984;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .25s;
+        }
+
+        .home-link:hover {
+            color: var(--primary);
+            transform: translateX(-3px);
+        }
+
+        /* MAIN CARD */
+
+        .main {
+            max-width: 1100px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: .85fr 1.15fr;
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(25,55,95,.09);
+            animation: riseUp .7s ease both;
+        }
+
+        /* LEFT PANEL */
+
+        .left-panel {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(150deg, #123d73, #1769d2 65%, #3992e8);
+            color: white;
+            padding: 55px 38px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-panel::before,
+        .left-panel::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255,255,255,.13);
+            border-radius: 50%;
+        }
+
+        .left-panel::before {
+            width: 330px;
+            height: 330px;
+            right: -180px;
+            top: -120px;
+        }
+
+        .left-panel::after {
+            width: 230px;
+            height: 230px;
+            left: -130px;
+            bottom: -110px;
+        }
+
+        .left-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .doctor-icon {
+            width: 75px;
+            height: 75px;
+            display: grid;
+            place-items: center;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 21px;
+            font-size: 35px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .left-panel h1 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 33px;
+            line-height: 1.35;
+            font-weight: 800;
+            margin-bottom: 17px;
+        }
+
+        .left-panel p {
+            color: #dceaff;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        .features {
+            margin-top: 35px;
+            display: grid;
+            gap: 21px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            color: #f0f6ff;
+            font-size: 13px;
+        }
+
+        .feature span {
+            width: 29px;
+            height: 29px;
+            display: grid;
+            place-items: center;
+            background: rgba(255,255,255,.13);
+            border-radius: 9px;
+        }
+
+        .trust-note {
+            margin-top: 38px;
+            padding: 14px;
+            border-radius: 12px;
+            background: rgba(255,255,255,.1);
+            color: #e8f2ff;
+            font-size: 11px;
+            line-height: 1.7;
+        }
+
+        /* RIGHT PANEL */
+
+        .right-panel {
+            padding: 43px 48px;
+        }
+
+        .heading {
+            margin-bottom: 27px;
+        }
+
+        .eyebrow {
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 9px;
+        }
+
+        .heading h2 {
+            font-family: 'Manrope', sans-serif;
+            font-size: 27px;
+            font-weight: 800;
+            color: var(--navy);
+            margin-bottom: 8px;
+        }
+
+        .heading p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* FORM */
+
+        .field {
+            margin-bottom: 19px;
+        }
+
+        label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #34445d;
+            margin-bottom: 8px;
+        }
+
+        .required {
+            color: #e34d4d;
+        }
+
+        .input-wrap {
+            position: relative;
+        }
+
+        .input-wrap .field-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8293aa;
+            font-size: 14px;
+            pointer-events: none;
+        }
+
+        input {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 14px 14px 42px;
+            background: #fafbfd;
+            outline: none;
+            font-family: inherit;
+            font-size: 12px;
+            color: #263950;
+            transition: .25s ease;
+        }
+
+        input::placeholder {
+            color: #a0aabb;
+        }
+
+        input:focus {
+            border-color: #4389e2;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(23,105,210,.09);
+        }
+
+        .helper {
+            color: #98a4b4;
+            font-size: 10px;
+            margin-top: 6px;
+        }
+
+        /* BUTTON */
+
+        .submit-btn {
+            width: 100%;
+            border: none;
+            border-radius: 11px;
+            padding: 15px;
+            background: linear-gradient(100deg, #1769d2, #3288e4);
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 8px 19px rgba(23,105,210,.2);
+            transition: .3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(23,105,210,.3);
+            background: linear-gradient(100deg, #1054ad, #1769d2);
+        }
+
+        .submit-btn:active {
+            transform: scale(.99);
+        }
+
+        .submit-btn span {
+            margin-left: 8px;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 22px;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            transition: .2s;
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .footer {
+            text-align: center;
+            color: #98a5b5;
+            font-size: 11px;
+            margin: 24px auto 0;
+        }
+
+        /* ANIMATIONS */
+
+        @keyframes riseUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 850px) {
+            .main {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                padding: 38px 30px;
+            }
+
+            .left-panel h1 {
+                font-size: 29px;
+            }
+
+            .right-panel {
+                padding: 35px 30px;
+            }
+        }
+
+        @media(max-width: 500px) {
+            body {
+                padding: 18px 12px;
+            }
+
+            .brand {
+                font-size: 19px;
+            }
+
+            .right-panel {
+                padding: 28px 19px;
+            }
+
+            .heading h2 {
+                font-size: 23px;
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="brand">
+            <div class="brand-icon">🏥</div>
+            MediCare Hospital
+        </div>
+
+        <a href="/" class="home-link">← Back to Home</a>
+
+    </header>
+
+
+    <!-- MAIN CARD -->
+
+    <main class="main">
+
+        <!-- LEFT INFORMATION PANEL -->
+
+        <section class="left-panel">
+
+            <div class="left-content">
+
+                <div class="doctor-icon">👨‍⚕️</div>
+
+                <h1>Great Doctors,<br>Better Healthcare.</h1>
+
+                <p>
+                    Add qualified doctors to your MediCare Hospital
+                    management system and organize their specialties,
+                    contact details and availability.
+                </p>
+
+                <div class="features">
+
+                    <div class="feature">
+                        <span>✓</span>
+                        Manage doctor information
+                    </div>
+
+                    <div class="feature">
+                        <span>✓</span>
+                        Organize medical specializations
+                    </div>
+
+                    <div class="feature">
+                        <span>✓</span>
+                        Manage available consultation days
+                    </div>
+
+                </div>
+
+                <div class="trust-note">
+                    🛡️ Keep doctor information accurate and
+                    up to date for better appointment management.
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REGISTRATION FORM -->
+
+        <section class="right-panel">
+
+            <div class="heading">
+
+                <div class="eyebrow">Doctor Management</div>
+
+                <h2>Doctor Registration</h2>
+
+                <p>
+                    Enter the doctor's details to add them to
+                    the MediCare Hospital system.
+                </p>
+
+            </div>
+
+
+            <form method="POST" action="/doctors" id="doctorForm">
+
+                <div class="field">
+
+                    <label>
+                        Doctor Name <span class="required">*</span>
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">👤</span>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter doctor full name"
+                            autocomplete="name"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Specialization</label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">🩺</span>
+
+                        <input
+                            type="text"
+                            name="specialization"
+                            placeholder="e.g. Cardiologist, Neurologist">
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Phone Number</label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">📞</span>
+
+                        <input
+                            type="tel"
+                            name="phone"
+                            placeholder="Enter phone number"
+                            autocomplete="tel">
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Email Address</label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">✉️</span>
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="doctor@example.com"
+                            autocomplete="email">
+
+                    </div>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label>Available Days</label>
+
+                    <div class="input-wrap">
+
+                        <span class="field-icon">📅</span>
+
+                        <input
+                            type="text"
+                            name="available_days"
+                            placeholder="e.g. Monday, Wednesday, Friday">
+
+                    </div>
+
+                    <p class="helper">
+                        Enter the days on which the doctor is available.
+                    </p>
+
+                </div>
+
+
+                <button type="submit" class="submit-btn">
+                    Add Doctor <span>→</span>
+                </button>
+
+            </form>
+
+
+            <a href="/" class="back-link">
+                ← Back to Home
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <footer class="footer">
+        © 2026 MediCare Hospital Management System. All Rights Reserved.
+    </footer>
+
+
+    <script>
+        // Basic form validation
+        document.getElementById("doctorForm").addEventListener("submit", function(event) {
+
+            const name = this.querySelector('[name="name"]').value.trim();
+
+            if (name.length < 2) {
+                event.preventDefault();
+                alert("Please enter a valid doctor name.");
+                this.querySelector('[name="name"]').focus();
+            }
+
+        });
+    </script>
+
+</body>
+</html>

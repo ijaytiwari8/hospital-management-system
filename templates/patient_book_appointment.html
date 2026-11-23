@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment | MediCare</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #4f46e5;
+            --dark: #1e3a8a;
+            --text: #334155;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 35px 18px;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: linear-gradient(135deg, #eff6ff, #eef2ff, #f5f3ff);
+            overflow-x: hidden;
+        }
+
+        .background-circle {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(2px);
+            pointer-events: none;
+            z-index: -1;
+            animation: float 7s ease-in-out infinite;
+        }
+
+        .circle-one {
+            width: 280px;
+            height: 280px;
+            background: rgba(96,165,250,0.13);
+            top: -100px;
+            left: -80px;
+        }
+
+        .circle-two {
+            width: 350px;
+            height: 350px;
+            background: rgba(129,140,248,0.12);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: 2s;
+        }
+
+        .booking-card {
+            width: 100%;
+            max-width: 570px;
+            background: white;
+            padding: 38px;
+            border-radius: 23px;
+            border: 1px solid rgba(255,255,255,0.8);
+            box-shadow: 0 20px 60px rgba(30,64,175,0.12);
+            animation: cardEnter 0.7s ease both;
+        }
+
+        .top-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 17px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+            border-radius: 22px;
+            font-size: 37px;
+            animation: iconFloat 3s ease-in-out infinite;
+        }
+
+        .tag {
+            display: block;
+            width: fit-content;
+            margin: 0 auto 10px;
+            padding: 6px 12px;
+            color: var(--primary);
+            background: #eff6ff;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--dark);
+            font-family: 'Manrope', sans-serif;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            margin: 9px 0 28px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .message {
+            padding: 13px 15px;
+            margin-bottom: 12px;
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+            border-radius: 11px;
+            font-size: 13px;
+            font-weight: 600;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 9px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .field-icon {
+            width: 28px;
+            height: 28px;
+            display: grid;
+            place-items: center;
+            background: #eff6ff;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            height: 51px;
+            padding: 0 15px;
+            border: 1px solid #dbe3ef;
+            border-radius: 11px;
+            outline: none;
+            background: #fbfdff;
+            color: #334155;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            transition: 0.25s;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select:focus, input:focus {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.09);
+        }
+
+        select:hover, input:hover {
+            border-color: #93c5fd;
+        }
+
+        .field-hint {
+            display: block;
+            margin-top: 7px;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .date-time-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            min-height: 53px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 11px;
+            background: linear-gradient(120deg, #2563eb, #4f46e5);
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 8px 20px rgba(37,99,235,0.18);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(37,99,235,0.28);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        .note {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            margin-top: 20px;
+            padding: 14px;
+            background: #f8faff;
+            border: 1px solid #e8eefb;
+            border-radius: 11px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .note-icon {
+            font-size: 18px;
+        }
+
+        .back {
+            display: block;
+            width: fit-content;
+            margin: 23px auto 0;
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.25s;
+        }
+
+        .back:hover {
+            color: var(--dark);
+            transform: translateX(-3px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        @keyframes cardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(25px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes iconFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width: 600px) {
+            body {
+                padding: 20px 13px;
+            }
+
+            .booking-card {
+                padding: 27px 20px;
+                border-radius: 19px;
+            }
+
+            h1 {
+                font-size: 23px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+            }
+
+            .date-time-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background-circle circle-one"></div>
+    <div class="background-circle circle-two"></div>
+
+    <main class="booking-card">
+
+        <div class="top-icon">🩺</div>
+
+        <span class="tag">PATIENT PORTAL</span>
+
+        <h1>Book an Appointment</h1>
+
+        <p class="subtitle">
+            Choose your preferred doctor, date and time.
+            Your health journey starts here.
+        </p>
+
+        {% with messages = get_flashed_messages() %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST"
+              action="{{ url_for('patient_book_appointment') }}"
+              id="bookingForm">
+
+            <div class="form-group">
+                <label for="doctor_id">
+                    <span class="field-icon">👨‍⚕️</span>
+                    Select Doctor
+                </label>
+
+                <select name="doctor_id" id="doctor_id" required>
+                    <option value="">-- Choose a Doctor --</option>
+
+                    {% for doctor in doctors %}
+                        <option value="{{ doctor.doctor_id }}">
+                            Dr. {{ doctor.name }} - {{ doctor.specialization }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <span class="field-hint">
+                    Select an available doctor for your consultation.
+                </span>
+            </div>
+
+            <div class="date-time-grid">
+
+                <div class="form-group">
+                    <label for="appointment_date">
+                        <span class="field-icon">📅</span>
+                        Appointment Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="appointment_date"
+                        id="appointment_date"
+                        required
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="appointment_time">
+                        <span class="field-icon">🕒</span>
+                        Appointment Time
+                    </label>
+
+                    <input
+                        type="time"
+                        name="appointment_time"
+                        id="appointment_time"
+                        required
+                    >
+                </div>
+
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                Confirm Appointment →
+            </button>
+
+        </form>
+
+        <div class="note">
+            <span class="note-icon">ℹ️</span>
+            <span>
+                Your appointment will initially have
+                <strong>Pending</strong> status. You can check its
+                status from your patient dashboard.
+            </span>
+        </div>
+
+        <a href="{{ url_for('patient_dashboard') }}" class="back">
+            ← Back to Dashboard
+        </a>
+
+        <div class="footer">
+            © 2026 MediCare Hospital Management System
+        </div>
+
+    </main>
+
+    <script>
+        // Prevent selecting past dates
+
+        const dateInput = document.getElementById("appointment_date");
+
+        const today = new Date();
+        const localDate = new Date(
+            today.getTime() - today.getTimezoneOffset() * 60000
+        ).toISOString().split("T")[0];
+
+        dateInput.min = localDate;
+
+        // Form validation
+
+        const bookingForm = document.getElementById("bookingForm");
+        const submitBtn = document.getElementById("submitBtn");
+
+        bookingForm.addEventListener("submit", function(event) {
+
+            const selectedDate = dateInput.value;
+            const doctor = document.getElementById("doctor_id").value;
+            const time = document.getElementById("appointment_time").value;
+
+            if (!doctor || !selectedDate || !time) {
+                event.preventDefault();
+                alert("Please fill in all appointment details.");
+                return;
+            }
+
+            if (selectedDate < localDate) {
+                event.preventDefault();
+                alert("Please select today or a future date.");
+                return;
+            }
+
+            submitBtn.textContent = "Submitting Appointment...";
+            submitBtn.style.opacity = "0.8";
+            submitBtn.style.pointerEvents = "none";
+        });
+
+    </script>
+
+</body>
+</html>

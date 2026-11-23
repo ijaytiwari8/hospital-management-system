@@ -1,0 +1,1424 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b5ed7">
+    <meta name="description" content="MediCare Hospital Management System - manage doctors, patients and appointments with ease.">
+
+    <title>MediCare Hospital | Healthcare Management</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1266e8;
+            --primary-dark: #084db8;
+            --navy: #102b50;
+            --text: #24364b;
+            --muted: #65758b;
+            --background: #f5f9ff;
+            --line: #e5edf7;
+            --teal: #13b8a6;
+            --shadow: 0 18px 55px rgba(22, 65, 120, .10);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: "DM Sans", Arial, sans-serif;
+            color: var(--text);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .container {
+            width: min(1160px, calc(100% - 48px));
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,.88);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(225,235,247,.8);
+            transition: box-shadow .3s ease, background .3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 8px 30px rgba(19,53,96,.08);
+            background: rgba(255,255,255,.96);
+        }
+
+        .nav-inner {
+            min-height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .brand-mark {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            color: #fff;
+            font-size: 25px;
+            border-radius: 14px;
+            background: linear-gradient(145deg, #1685f8, #0754c9);
+            box-shadow: 0 8px 18px rgba(18,102,232,.25);
+        }
+
+        .brand-name {
+            font: 800 20px "Manrope", sans-serif;
+            color: var(--navy);
+            letter-spacing: -.7px;
+        }
+
+        .brand-name span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #53657b;
+            font-size: 13px;
+            font-weight: 700;
+            transition: color .2s ease, transform .2s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .nav-links .nav-cta {
+            color: #fff;
+            padding: 12px 17px;
+            border-radius: 11px;
+            background: var(--primary);
+            box-shadow: 0 7px 18px rgba(18,102,232,.18);
+        }
+
+        .nav-links .nav-cta:hover {
+            color: #fff;
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .menu-toggle {
+            display: none;
+            border: 0;
+            background: #edf4ff;
+            color: var(--navy);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            font-size: 23px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            padding: 86px 0 76px;
+            background:
+                radial-gradient(circle at 82% 18%, rgba(90,174,255,.17), transparent 27%),
+                radial-gradient(circle at 4% 85%, rgba(19,184,166,.09), transparent 25%),
+                linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(18,102,232,.09);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero::before {
+            width: 460px;
+            height: 460px;
+            right: -150px;
+            top: -220px;
+        }
+
+        .hero::after {
+            width: 340px;
+            height: 340px;
+            right: -90px;
+            top: -160px;
+        }
+
+        .hero-grid {
+            position: relative;
+            z-index: 1;
+            display: grid;
+            grid-template-columns: 1.08fr .92fr;
+            align-items: center;
+            gap: 55px;
+        }
+
+        .hero-copy {
+            animation: rise-in .8s both;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 13px;
+            color: #1262c9;
+            background: #e5f1ff;
+            border: 1px solid #d6e9ff;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: .7px;
+            text-transform: uppercase;
+        }
+
+        .eyebrow-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 0 4px rgba(19,184,166,.13);
+        }
+
+        h1 {
+            margin: 22px 0 19px;
+            max-width: 650px;
+            color: var(--navy);
+            font: 800 clamp(38px, 5vw, 61px)/1.12 "Manrope", sans-serif;
+            letter-spacing: -2.5px;
+        }
+
+        h1 span {
+            color: var(--primary);
+        }
+
+        .hero-copy > p {
+            max-width: 560px;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 800;
+            border: 1px solid transparent;
+            transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            color: #fff;
+            background: linear-gradient(135deg, #187cf2, #0755c8);
+            box-shadow: 0 10px 22px rgba(18,102,232,.22);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 14px 28px rgba(18,102,232,.30);
+        }
+
+        .btn-light {
+            color: var(--navy);
+            background: #fff;
+            border-color: #dce8f6;
+        }
+
+        .btn-light:hover {
+            box-shadow: 0 10px 22px rgba(22,65,120,.09);
+        }
+
+        .hero-note {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            color: #718197;
+            font-size: 13px;
+        }
+
+        .hero-note strong {
+            color: #314a68;
+        }
+
+        .check-icon {
+            width: 21px;
+            height: 21px;
+            display: grid;
+            place-items: center;
+            color: #078b77;
+            background: #dff8f2;
+            border-radius: 50%;
+            font-size: 12px;
+        }
+
+        /* Medical Illustration Card */
+
+        .hero-visual {
+            min-height: 390px;
+            position: relative;
+            display: grid;
+            place-items: center;
+            animation: fade-in 1s .15s both;
+        }
+
+        .visual-orbit {
+            position: absolute;
+            width: 360px;
+            height: 360px;
+            border: 1px dashed rgba(18,102,232,.20);
+            border-radius: 50%;
+            animation: slow-spin 32s linear infinite;
+        }
+
+        .visual-orbit::before,
+        .visual-orbit::after {
+            content: "+";
+            position: absolute;
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 28px;
+            color: var(--primary);
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 5px 16px rgba(22,65,120,.1);
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .visual-orbit::before {
+            top: 35px;
+            left: 50px;
+        }
+
+        .visual-orbit::after {
+            bottom: 35px;
+            right: 35px;
+        }
+
+        .medical-card {
+            position: relative;
+            z-index: 2;
+            width: min(100%, 360px);
+            padding: 28px;
+            border: 1px solid rgba(255,255,255,.9);
+            border-radius: 26px;
+            background: rgba(255,255,255,.88);
+            box-shadow: 0 25px 70px rgba(31,83,145,.16);
+            backdrop-filter: blur(12px);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .medical-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .medical-card-top strong {
+            color: var(--navy);
+            font: 800 16px "Manrope", sans-serif;
+        }
+
+        .live-pill {
+            color: #078b77;
+            background: #e3faf4;
+            padding: 6px 10px;
+            border-radius: 99px;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .medical-symbol {
+            width: 118px;
+            height: 118px;
+            display: grid;
+            place-items: center;
+            margin: 0 auto 24px;
+            color: #fff;
+            font-size: 62px;
+            border-radius: 34px;
+            background: linear-gradient(145deg, #36a2ff, #1261d8);
+            box-shadow: 0 18px 35px rgba(18,102,232,.25);
+        }
+
+        .medical-card h3 {
+            color: var(--navy);
+            text-align: center;
+            font: 800 21px "Manrope", sans-serif;
+        }
+
+        .medical-card p {
+            margin-top: 8px;
+            color: var(--muted);
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .mini-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .mini-metric {
+            padding: 13px;
+            background: #f3f8ff;
+            border-radius: 13px;
+            text-align: center;
+        }
+
+        .mini-metric strong {
+            display: block;
+            color: var(--primary);
+            font: 800 19px "Manrope", sans-serif;
+        }
+
+        .mini-metric span {
+            color: #7a8ba0;
+            font-size: 11px;
+        }
+
+        .float-chip {
+            position: absolute;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px 15px;
+            color: var(--navy);
+            background: #fff;
+            border: 1px solid #edf2f8;
+            border-radius: 14px;
+            box-shadow: 0 12px 28px rgba(31,83,145,.12);
+            font-size: 12px;
+            font-weight: 800;
+            animation: float 4.5s ease-in-out infinite;
+        }
+
+        .float-chip span {
+            font-size: 20px;
+        }
+
+        .chip-one {
+            top: 35px;
+            right: -3px;
+        }
+
+        .chip-two {
+            bottom: 34px;
+            left: -10px;
+            animation-delay: -1.8s;
+        }
+
+        /* Statistics */
+
+        .stats-wrap {
+            position: relative;
+            z-index: 5;
+            margin-top: -1px;
+            background: #fff;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 27px 0;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 7px 15px;
+            border-right: 1px solid var(--line);
+        }
+
+        .stat:last-child {
+            border-right: 0;
+        }
+
+        .stat strong {
+            display: block;
+            color: var(--navy);
+            font: 800 27px "Manrope", sans-serif;
+        }
+
+        .stat span {
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        /* Services */
+
+        .section {
+            padding: 82px 0;
+        }
+
+        .section-heading {
+            max-width: 650px;
+            margin: 0 auto 42px;
+            text-align: center;
+        }
+
+        .section-kicker {
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            margin: 12px 0;
+            color: var(--navy);
+            font: 800 clamp(27px, 3.5vw, 38px)/1.2 "Manrope", sans-serif;
+            letter-spacing: -1px;
+        }
+
+        .section-heading p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service-card {
+            padding: 27px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 19px;
+            box-shadow: 0 8px 25px rgba(22,65,120,.035);
+            transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            border-color: #c9def9;
+            box-shadow: var(--shadow);
+        }
+
+        .service-icon {
+            width: 53px;
+            height: 53px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            background: #eaf3ff;
+            font-size: 26px;
+        }
+
+        .service-card:nth-child(2) .service-icon {
+            background: #e5faf5;
+        }
+
+        .service-card:nth-child(3) .service-icon {
+            background: #fff4e7;
+        }
+
+        .service-card h3 {
+            margin-bottom: 9px;
+            color: var(--navy);
+            font: 800 17px "Manrope", sans-serif;
+        }
+
+        .service-card p {
+            min-height: 48px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .service-card a {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 19px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .service-card a span {
+            transition: transform .2s ease;
+        }
+
+        .service-card a:hover span {
+            transform: translateX(4px);
+        }
+
+        /* Call to Action */
+
+        .cta {
+            padding: 0 0 80px;
+        }
+
+        .cta-panel {
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+            padding: 38px 42px;
+            color: #fff;
+            border-radius: 23px;
+            background: linear-gradient(115deg, #0e55bf, #1688ef);
+            box-shadow: 0 18px 45px rgba(18,102,232,.19);
+        }
+
+        .cta-panel::after {
+            content: "+";
+            position: absolute;
+            right: 28%;
+            top: -70px;
+            color: rgba(255,255,255,.09);
+            font: 200px "Manrope", sans-serif;
+        }
+
+        .cta-panel h2 {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 8px;
+            font: 800 25px "Manrope", sans-serif;
+        }
+
+        .cta-panel p {
+            position: relative;
+            z-index: 1;
+            color: rgba(255,255,255,.82);
+            font-size: 14px;
+        }
+
+        .cta-buttons {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .cta-panel .btn {
+            color: var(--primary-dark);
+            background: #fff;
+            white-space: nowrap;
+        }
+
+        .cta-panel .btn:hover {
+            background: #eaf3ff;
+            box-shadow: 0 10px 22px rgba(0,0,0,.12);
+        }
+
+        /* Footer */
+
+        footer {
+            padding: 26px 0;
+            color: #8190a3;
+            background: #fff;
+            border-top: 1px solid var(--line);
+            text-align: center;
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: var(--navy);
+        }
+
+        /* Animations */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes rise-in {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes slow-spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Tablet */
+
+        @media (max-width: 1000px) {
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .nav-links .nav-cta {
+                padding: 11px 13px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                gap: 25px;
+            }
+
+            .hero-visual {
+                min-height: 350px;
+            }
+
+            .visual-orbit {
+                width: 310px;
+                height: 310px;
+            }
+
+            .service-grid {
+                gap: 14px;
+            }
+
+            .service-card {
+                padding: 22px;
+            }
+        }
+
+        /* Mobile */
+
+        @media (max-width: 700px) {
+            .container {
+                width: min(100% - 34px, 560px);
+            }
+
+            .nav-inner {
+                min-height: 70px;
+            }
+
+            .menu-toggle {
+                display: grid;
+                place-items: center;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                display: none;
+                align-items: stretch;
+                gap: 0;
+                padding: 10px 22px 18px;
+                background: rgba(255,255,255,.98);
+                border-bottom: 1px solid var(--line);
+                box-shadow: 0 15px 25px rgba(22,65,120,.08);
+            }
+
+            .nav-links.open {
+                display: flex;
+                flex-direction: column;
+                animation: rise-in .25s both;
+            }
+
+            .nav-links a {
+                padding: 13px 5px;
+                border-bottom: 1px solid #f0f4f9;
+                font-size: 14px;
+            }
+
+            .nav-links .nav-cta {
+                margin-top: 9px;
+                text-align: center;
+                border: 0;
+            }
+
+            .hero {
+                padding: 58px 0 48px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+
+            .hero-copy {
+                text-align: center;
+            }
+
+            .hero-copy > p {
+                margin: 0 auto;
+                font-size: 15px;
+            }
+
+            .hero-actions,
+            .hero-note {
+                justify-content: center;
+            }
+
+            h1 {
+                margin-top: 18px;
+                font-size: clamp(37px, 10vw, 49px);
+                letter-spacing: -1.8px;
+            }
+
+            .hero-visual {
+                min-height: 360px;
+            }
+
+            .medical-card {
+                width: min(100%, 330px);
+            }
+
+            .chip-one {
+                right: 0;
+            }
+
+            .chip-two {
+                left: 0;
+            }
+
+            .stats {
+                padding: 20px 0;
+            }
+
+            .stat {
+                padding: 5px 8px;
+            }
+
+            .stat strong {
+                font-size: 22px;
+            }
+
+            .stat span {
+                font-size: 10px;
+            }
+
+            .section {
+                padding: 62px 0;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .service-card p {
+                min-height: 0;
+            }
+
+            .cta {
+                padding-bottom: 55px;
+            }
+
+            .cta-panel {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 29px 25px;
+            }
+
+            .cta-panel h2 {
+                font-size: 22px;
+            }
+
+            .cta-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .cta-buttons .btn {
+                width: 100%;
+            }
+        }
+
+        /* Reduced Motion */
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <header class="navbar" id="navbar">
+
+        <div class="container nav-inner">
+
+            <a class="brand" href="/" aria-label="MediCare Hospital home">
+                <span class="brand-mark">✚</span>
+                <span class="brand-name">Medi<span>Care</span></span>
+            </a>
+
+            <button class="menu-toggle"
+                id="menuToggle"
+                type="button"
+                aria-label="Open navigation menu"
+                aria-expanded="false">
+                ☰
+            </button>
+
+            <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+
+                <a href="/">Home</a>
+
+                <a href="/doctors-list">Doctors</a>
+
+                <a href="/patients">Register</a>
+
+                <a href="/appointments">Appointments</a>
+
+                <a href="/patient-login">Patient Login</a>
+
+                <a href="/doctor-login">Doctor Login</a>
+
+                <a href="/admin-login" class="nav-cta">
+                    Admin Login <span aria-hidden="true">→</span>
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+
+        <section class="hero">
+
+            <div class="container hero-grid">
+
+                <div class="hero-copy">
+
+                    <div class="eyebrow">
+                        <span class="eyebrow-dot"></span>
+                        Your health, our commitment
+                    </div>
+
+                    <h1>
+                        Better care.<br>
+                        <span>Healthier lives.</span>
+                    </h1>
+
+                    <p>
+                        Welcome to MediCare Hospital. A smarter way to manage patient
+                        records, connect with doctors and organize appointments — all in one place.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a href="/patients" class="btn btn-primary">
+                            ＋ Register as Patient
+                        </a>
+
+                        <a href="/patient-login" class="btn btn-light">
+                            Patient Login →
+                        </a>
+
+                        <a href="/doctor-login" class="btn btn-light">
+                            Doctor Login →
+                        </a>
+
+                    </div>
+
+                    <div class="hero-note">
+
+                        <span class="check-icon">✓</span>
+
+                        <span>
+                            <strong>Simple and organized</strong>
+                            healthcare management
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- Medical Illustration -->
+
+                <div class="hero-visual" aria-label="MediCare healthcare services illustration">
+
+                    <div class="visual-orbit"></div>
+
+                    <div class="float-chip chip-one">
+                        <span>🩺</span>
+                        Doctor care
+                    </div>
+
+                    <div class="float-chip chip-two">
+                        <span>📅</span>
+                        Easy appointments
+                    </div>
+
+                    <div class="medical-card">
+
+                        <div class="medical-card-top">
+                            <strong>Your health hub</strong>
+                            <span class="live-pill">● HEALTHCARE</span>
+                        </div>
+
+                        <div class="medical-symbol">✚</div>
+
+                        <h3>Care made simpler</h3>
+
+                        <p>
+                            Keep your healthcare journey organized with convenient digital tools.
+                        </p>
+
+                        <div class="mini-metrics">
+
+                            <div class="mini-metric">
+                                <strong>24/7</strong>
+                                <span>Access to records</span>
+                            </div>
+
+                            <div class="mini-metric">
+                                <strong>Easy</strong>
+                                <span>Appointment flow</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Platform Highlights -->
+
+        <section class="stats-wrap" aria-label="Platform highlights">
+
+            <div class="container stats">
+
+                <div class="stat reveal">
+                    <strong>01</strong>
+                    <span>Centralized platform</span>
+                </div>
+
+                <div class="stat reveal">
+                    <strong>02</strong>
+                    <span>Patient &amp; doctor records</span>
+                </div>
+
+                <div class="stat reveal">
+                    <strong>03</strong>
+                    <span>Appointment management</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Services -->
+
+        <section class="section" id="services">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <span class="section-kicker">What you can do</span>
+
+                    <h2>Everything you need, in one place</h2>
+
+                    <p>
+                        Explore the main tools available in the MediCare Hospital Management System.
+                    </p>
+
+                </div>
+
+                <div class="service-grid">
+
+                    <article class="service-card reveal">
+
+                        <div class="service-icon">👨‍⚕️</div>
+
+                        <h3>Doctor Management</h3>
+
+                        <p>
+                            Explore doctor information and manage doctor records through the hospital system.
+                        </p>
+
+                        <a href="/doctors-list">
+                            View doctors <span>→</span>
+                        </a>
+
+                    </article>
+
+                    <article class="service-card reveal">
+
+                        <div class="service-icon">🧑‍🤝‍🧑</div>
+
+                        <h3>Patient Management</h3>
+
+                        <p>
+                            Register patients and keep essential patient information organized.
+                        </p>
+
+                        <a href="/patients">
+                            Patient registration <span>→</span>
+                        </a>
+
+                    </article>
+
+                    <article class="service-card reveal">
+
+                        <div class="service-icon">🗓️</div>
+
+                        <h3>Appointment Management</h3>
+
+                        <p>
+                            Access the appointment workflow and keep visits organized in one place.
+                        </p>
+
+                        <a href="/appointments">
+                            Manage appointments <span>→</span>
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Login Portals -->
+
+        <section class="section" id="login-portals">
+
+            <div class="container">
+
+                <div class="section-heading reveal">
+
+                    <span class="section-kicker">Account Access</span>
+
+                    <h2>Choose Your Login Portal</h2>
+
+                    <p>
+                        Select your account type to access your personalized MediCare dashboard.
+                    </p>
+
+                </div>
+
+                <div class="service-grid">
+
+                    <article class="service-card reveal">
+
+                        <div class="service-icon">🧑‍🤝‍🧑</div>
+
+                        <h3>Patient Portal</h3>
+
+                        <p>
+                            Login to view your profile, book appointments and track appointment status.
+                        </p>
+
+                        <a href="/patient-login">
+                            Patient Login <span>→</span>
+                        </a>
+
+                    </article>
+
+                    <article class="service-card reveal">
+
+                        <div class="service-icon">👨‍⚕️</div>
+
+                        <h3>Doctor Portal</h3>
+
+                        <p>
+                            Login to manage your availability, view appointments and update appointment status.
+                        </p>
+
+                        <a href="/doctor-login">
+                            Doctor Login <span>→</span>
+                        </a>
+
+                    </article>
+
+                    <article class="service-card reveal">
+
+                        <div class="service-icon">🛡️</div>
+
+                        <h3>Admin Portal</h3>
+
+                        <p>
+                            Login to manage hospital records, doctors, patients and appointments.
+                        </p>
+
+                        <a href="/admin-login">
+                            Admin Login <span>→</span>
+                        </a>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Admin Call to Action -->
+
+        <section class="cta">
+
+            <div class="container">
+
+                <div class="cta-panel reveal">
+
+                    <div>
+
+                        <h2>Manage your hospital with confidence.</h2>
+
+                        <p>
+                            Access your dedicated portal to manage hospital activities.
+                        </p>
+
+                    </div>
+
+                    <div class="cta-buttons">
+
+                        <a href="/doctor-login" class="btn">
+                            Doctor Login →
+                        </a>
+
+                        <a href="/admin-login" class="btn">
+                            Admin Login →
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+
+    <footer>
+
+        <div class="container">
+
+            © <span id="year"></span>
+
+            <strong>MediCare Hospital</strong>.
+
+            Hospital Management System.
+
+        </div>
+
+    </footer>
+
+    <script>
+
+        // Mobile Navigation
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", () => {
+
+            const isOpen = navLinks.classList.toggle("open");
+
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+            );
+
+            menuToggle.textContent = isOpen ? "×" : "☰";
+
+        });
+
+        // Close mobile menu after clicking a link
+
+        navLinks.querySelectorAll("a").forEach((link) => {
+
+            link.addEventListener("click", () => {
+
+                navLinks.classList.remove("open");
+
+                menuToggle.setAttribute("aria-expanded", "false");
+
+                menuToggle.setAttribute(
+                    "aria-label",
+                    "Open navigation menu"
+                );
+
+                menuToggle.textContent = "☰";
+
+            });
+
+        });
+
+        // Navbar shadow on scroll
+
+        const navbar = document.getElementById("navbar");
+
+        window.addEventListener("scroll", () => {
+
+            navbar.classList.toggle("scrolled", window.scrollY > 12);
+
+        }, { passive: true });
+
+        // Reveal sections when they enter the viewport
+
+        const revealItems = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+
+            const observer = new IntersectionObserver((entries, currentObserver) => {
+
+                entries.forEach((entry) => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.classList.add("visible");
+
+                        currentObserver.unobserve(entry.target);
+
+                    }
+
+                });
+
+            }, { threshold: 0.12 });
+
+            revealItems.forEach((item) => observer.observe(item));
+
+        } else {
+
+            revealItems.forEach((item) => item.classList.add("visible"));
+
+        }
+
+        // Current year in footer
+
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+    </script>
+
+</body>
+</html>

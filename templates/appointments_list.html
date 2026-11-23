@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Management | MediCare Hospital</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: linear-gradient(135deg, #f0f6ff, #f8fbff);
+            min-height: 100vh;
+            padding: 35px 25px;
+            color: #1e293b;
+        }
+
+        .page {
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 25px;
+            animation: slideDown 0.6s ease;
+        }
+
+        .heading {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .heading-icon {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 17px;
+            background: linear-gradient(135deg, #0878e8, #0753b8);
+            color: white;
+            font-size: 27px;
+            box-shadow: 0 8px 20px rgba(13, 110, 253, 0.22);
+        }
+
+        h1 {
+            color: #123b70;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: #718096;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .dashboard-link {
+            padding: 12px 17px;
+            background: white;
+            border: 1px solid #dce8f5;
+            border-radius: 10px;
+            color: #1768bd;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: 0.3s ease;
+        }
+
+        .dashboard-link:hover {
+            background: #eaf4ff;
+            transform: translateY(-2px);
+        }
+
+        .container {
+            background: white;
+            padding: 26px;
+            border-radius: 20px;
+            border: 1px solid #e5edf6;
+            box-shadow: 0 12px 35px rgba(30, 70, 120, 0.08);
+            animation: fadeUp 0.7s ease;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .top-section h2 {
+            color: #173b63;
+            font-size: 19px;
+            font-weight: 800;
+        }
+
+        .top-section p {
+            color: #8a98a9;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .search-box {
+            width: 240px;
+            padding: 11px 14px;
+            border: 1px solid #dce6f1;
+            border-radius: 9px;
+            outline: none;
+            font-family: inherit;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .search-box:focus,
+        .filter-select:focus {
+            border-color: #1682ed;
+            box-shadow: 0 0 0 3px rgba(22, 130, 237, 0.10);
+        }
+
+        .filter-select {
+            padding: 11px 13px;
+            border: 1px solid #dce6f1;
+            border-radius: 9px;
+            background: #fff;
+            color: #344b66;
+            font-family: inherit;
+            font-size: 13px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #e8eef5;
+            border-radius: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        th, td {
+            padding: 16px 13px;
+            text-align: center;
+            border-bottom: 1px solid #edf1f6;
+            font-size: 13px;
+        }
+
+        th {
+            background: #123b70;
+            color: white;
+            font-weight: 700;
+            white-space: nowrap;
+            letter-spacing: 0.2px;
+        }
+
+        td {
+            color: #465a70;
+        }
+
+        tbody tr {
+            transition: 0.25s ease;
+        }
+
+        tbody tr:hover {
+            background: #f3f8ff;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .id-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            background: #edf5ff;
+            color: #1768bd;
+            border-radius: 7px;
+            font-weight: 700;
+        }
+
+        .patient-name {
+            color: #173b63;
+            font-weight: 700;
+        }
+
+        .doctor-name {
+            color: #087b73;
+            font-weight: 700;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .Pending {
+            background: #fff3cd;
+            color: #946200;
+        }
+
+        .Scheduled {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .Accepted {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .Rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .Completed {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .action-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .action-form select {
+            max-width: 125px;
+            padding: 9px 7px;
+            border: 1px solid #dce6f1;
+            border-radius: 8px;
+            background: #f8fbff;
+            color: #344b66;
+            font-family: inherit;
+            font-size: 12px;
+            outline: none;
+        }
+
+        .update-btn {
+            padding: 9px 12px;
+            background: linear-gradient(135deg, #0878e8, #0753b8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .update-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(13, 110, 253, 0.20);
+        }
+
+        .empty {
+            padding: 40px !important;
+            color: #8291a3;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .empty-icon {
+            display: block;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 18px;
+            color: #8a98a9;
+            font-size: 12px;
+        }
+
+        .back {
+            display: inline-block;
+            color: #1768bd;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .back:hover {
+            transform: translateX(-3px);
+            color: #084298;
+        }
+
+        .no-results {
+            display: none;
+            padding: 30px;
+            text-align: center;
+            color: #8795a7;
+            font-size: 13px;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media(max-width: 700px) {
+            body {
+                padding: 20px 12px;
+            }
+
+            .heading {
+                align-items: flex-start;
+            }
+
+            h1 {
+                font-size: 21px;
+            }
+
+            .heading-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 23px;
+            }
+
+            .container {
+                padding: 17px 12px;
+            }
+
+            .filters {
+                width: 100%;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+        }
+
+        @media(prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="header">
+
+        <div class="heading">
+            <div class="heading-icon">📅</div>
+
+            <div>
+                <h1>Appointment Management</h1>
+                <p class="subtitle">Manage and monitor all hospital appointments</p>
+            </div>
+        </div>
+
+        <a href="{{ url_for('dashboard') }}" class="dashboard-link">
+            ← Dashboard
+        </a>
+
+    </div>
+
+    <div class="container">
+
+        <div class="top-section">
+
+            <div>
+                <h2>All Appointments</h2>
+                <p>Search appointments and manage their status</p>
+            </div>
+
+            <div class="filters">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="search-box"
+                    placeholder="🔍 Search patient or doctor..."
+                >
+
+                <select id="statusFilter" class="filter-select">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="scheduled">Scheduled</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="completed">Completed</option>
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Patient Name</th>
+                        <th>Doctor Name</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Update Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="appointmentTable">
+
+                    {% for appointment in appointments %}
+
+                    <tr class="appointment-row">
+
+                        <td>
+                            <span class="id-badge">
+                                #{{ appointment.appointment_id }}
+                            </span>
+                        </td>
+
+                        <td class="patient-name">
+                            {{ appointment.patient_name }}
+                        </td>
+
+                        <td class="doctor-name">
+                            {{ appointment.doctor_name }}
+                        </td>
+
+                        <td>{{ appointment.appointment_date }}</td>
+
+                        <td>{{ appointment.appointment_time }}</td>
+
+                        <td>
+                            <span class="status {{ appointment.status }}">
+                                {{ appointment.status }}
+                            </span>
+                        </td>
+
+                        <td>
+                            <form class="action-form"
+                                  method="POST"
+                                  action="{{ url_for('admin_update_appointment_status', appointment_id=appointment.appointment_id) }}">
+
+                                <select name="status" required>
+
+                                    <option value="Accepted"
+                                        {% if appointment.status == 'Accepted' %}selected{% endif %}>
+                                        Accept
+                                    </option>
+
+                                    <option value="Rejected"
+                                        {% if appointment.status == 'Rejected' %}selected{% endif %}>
+                                        Reject
+                                    </option>
+
+                                    <option value="Completed"
+                                        {% if appointment.status == 'Completed' %}selected{% endif %}>
+                                        Completed
+                                    </option>
+
+                                </select>
+
+                                <button type="submit" class="update-btn">
+                                    Update
+                                </button>
+
+                            </form>
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+                        <td colspan="7" class="empty">
+                            <span class="empty-icon">📭</span>
+                            No appointments booked yet.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="no-results" id="noResults">
+            No matching appointments found.
+        </div>
+
+        <div class="table-footer">
+
+            <span id="resultCount">
+                Showing appointments
+            </span>
+
+            <a href="{{ url_for('dashboard') }}" class="back">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const statusFilter = document.getElementById("statusFilter");
+    const rows = document.querySelectorAll(".appointment-row");
+    const noResults = document.getElementById("noResults");
+    const resultCount = document.getElementById("resultCount");
+
+    function filterAppointments() {
+
+        const searchValue = searchInput.value.toLowerCase().trim();
+        const selectedStatus = statusFilter.value;
+
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+
+            const rowText = row.innerText.toLowerCase();
+
+            const statusElement = row.querySelector(".status");
+
+            const rowStatus = statusElement
+                ? statusElement.innerText.toLowerCase().trim()
+                : "";
+
+            const matchesSearch = rowText.includes(searchValue);
+
+            const matchesStatus =
+                selectedStatus === "all" ||
+                rowStatus === selectedStatus;
+
+            if (matchesSearch && matchesStatus) {
+                row.style.display = "";
+                visibleCount++;
+            } else {
+                row.style.display = "none";
+            }
+
+        });
+
+        noResults.style.display =
+            visibleCount === 0 && rows.length > 0 ? "block" : "none";
+
+        resultCount.innerText =
+            "Showing " + visibleCount + " of " + rows.length + " appointments";
+    }
+
+    searchInput.addEventListener("input", filterAppointments);
+    statusFilter.addEventListener("change", filterAppointments);
+
+    filterAppointments();
+</script>
+
+</body>
+</html>
